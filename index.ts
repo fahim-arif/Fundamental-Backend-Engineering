@@ -5,7 +5,7 @@ import {
   connection as Connection,
   Message,
   request as Request,
-  IUtf8Message
+  IUtf8Message,
 } from "websocket";
 
 let connections: Connection[] = [];
@@ -30,7 +30,13 @@ websocket.on("request", (request: Request) => {
   connection.on("message", (message: Message) => {
     //someone just sent a message tell everybody
     if ((<IUtf8Message>message).utf8Data) {
-        connections.forEach(c => c.send(`User${connection.socket.remotePort} says: ${(message as IUtf8Message).utf8Data}`));
+      connections.forEach((c) =>
+        c.send(
+          `User${connection.socket.remotePort} says: ${
+            (message as IUtf8Message).utf8Data
+          }`
+        )
+      );
     }
   });
 
